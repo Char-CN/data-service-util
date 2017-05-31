@@ -34,24 +34,25 @@ public class DateFormat {
 		if (strs.length == 1) {
 			System.out.println(str);
 			System.exit(0);
+		}
+		if (strs.length == 2) {
+			format = strs[1];
+		}
+		// 函数
+		String func = strs[0];
+		if (func.startsWith("today")) {
+			today(func);
+		} else if (func.startsWith("yesterday")) {
+			yesterday(func);
+		} else if (func.startsWith("month")) {
+			month(func);
 		} else {
-			if (strs.length == 2) {
-				format = strs[1];
-			}
-			// 函数
-			String func = strs[0];
-			if (func.startsWith("today")) {
-				today(func);
-			} else if (func.startsWith("yesterday")) {
-				yesterday(func);
-			} else {
-				System.out.println(str);
-				System.exit(0);
-			}
-			SimpleDateFormat sdf = new SimpleDateFormat(format);
-			System.out.println(sdf.format(c.getTime()));
+			System.out.println(str);
 			System.exit(0);
 		}
+		SimpleDateFormat sdf = new SimpleDateFormat(format);
+		System.out.println(sdf.format(c.getTime()));
+		System.exit(0);
 	}
 
 	private static void yesterday(String func) {
@@ -70,6 +71,15 @@ public class DateFormat {
 		}
 		if (func.indexOf("+") != -1) {
 			c.add(Calendar.DAY_OF_YEAR, IntegerUtil.getInt(func.substring(func.indexOf("+"))));
+		}
+	}
+
+	private static void month(String func) {
+		if (func.indexOf("-") != -1) {
+			c.add(Calendar.MONTH, IntegerUtil.getInt(func.substring(func.indexOf("-"))));
+		}
+		if (func.indexOf("+") != -1) {
+			c.add(Calendar.MONTH, IntegerUtil.getInt(func.substring(func.indexOf("+"))));
 		}
 	}
 

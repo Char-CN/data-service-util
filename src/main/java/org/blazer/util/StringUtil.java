@@ -38,4 +38,8 @@ public class StringUtil {
 		return obj.toString();
 	}
 
+	public static boolean isBlank(String str) {
+		return str == null || "".equals(str) || "".equals(str.trim());
+	}
+
 }
