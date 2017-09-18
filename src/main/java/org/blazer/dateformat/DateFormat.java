@@ -3,7 +3,7 @@ package org.blazer.dateformat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-import org.blazer.util.IntegerUtil;
+import org.blazer.common.util.IntegerUtil;
 
 /**
  * 格式：
