@@ -1,0 +1,124 @@
+<!-- 这个是测试文件，样式调好后，复制到email_template.html文件中去 -->
+<style>
+@media screen and (max-width: 600px) {
+	table td:before {
+		content: attr(data-label);
+		float: left;
+		text-transform: uppercase;
+		font-weight: bold;
+	}
+}
+
+h4 {
+	color: green;
+}
+
+h3 {
+	color: red;
+}
+
+tr {
+	background: #99CCFF;
+}
+
+tr:nth-child(2n) {
+	background: #CCCC99;
+	height: 28px;
+}
+
+table thead tr th {
+	font-size: 18px;
+	background-color: #9999CC;
+	height: 35px;
+}
+
+table {
+	width: 100%;
+	border: 2px solid #CCCC99;
+}
+</style>
+
+<table>
+	<thead>
+		<tr>
+			<th>支付</th>
+			<th>日期</th>
+			<th>金额</th>
+			<th>周期</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td data-label="支付">支付 #1</td>
+			<td data-label="日期">02/01/2015</td>
+			<td data-label="金额">$2,311</td>
+			<td data-label="周期">01/01/2015 - 01/31/2015</td>
+		</tr>
+		<tr>
+			<td data-label="支付">支付 #2</td>
+			<td data-label="日期">03/01/2015</td>
+			<td data-label="金额">$3,211</td>
+			<td data-label="周期">02/01/2015 - 02/28/2015</td>
+		</tr>
+		<tr>
+			<td data-label="支付">支付 #1</td>
+			<td data-label="日期">02/01/2015</td>
+			<td data-label="金额">$2,311</td>
+			<td data-label="周期">01/01/2015 - 01/31/2015</td>
+		</tr>
+		<tr>
+			<td data-label="支付">支付 #2</td>
+			<td data-label="日期">03/01/2015</td>
+			<td data-label="金额">$3,211</td>
+			<td data-label="周期">02/01/2015 - 02/28/2015</td>
+		</tr>
+		<tr>
+			<td data-label="支付">支付 #1</td>
+			<td data-label="日期">02/01/2015</td>
+			<td data-label="金额">$2,311</td>
+			<td data-label="周期">01/01/2015 - 01/31/2015</td>
+		</tr>
+		<tr>
+			<td data-label="支付">支付 #2</td>
+			<td data-label="日期">03/01/2015</td>
+			<td data-label="金额">$3,211</td>
+			<td data-label="周期">02/01/2015 - 02/28/2015</td>
+		</tr>
+		<tr>
+			<td data-label="支付">支付 #1</td>
+			<td data-label="日期">02/01/2015</td>
+			<td data-label="金额">$2,311</td>
+			<td data-label="周期">01/01/2015 - 01/31/2015</td>
+		</tr>
+		<tr>
+			<td data-label="支付">支付 #2</td>
+			<td data-label="日期">03/01/2015</td>
+			<td data-label="金额">$3,211</td>
+			<td data-label="周期">02/01/2015 - 02/28/2015</td>
+		</tr>
+		<tr>
+			<td data-label="支付">支付 #1</td>
+			<td data-label="日期">02/01/2015</td>
+			<td data-label="金额">$2,311</td>
+			<td data-label="周期">01/01/2015 - 01/31/2015</td>
+		</tr>
+		<tr>
+			<td data-label="支付">支付 #2</td>
+			<td data-label="日期">03/01/2015</td>
+			<td data-label="金额">$3,211</td>
+			<td data-label="周期">02/01/2015 - 02/28/2015</td>
+		</tr>
+		<tr>
+			<td data-label="支付">支付 #1</td>
+			<td data-label="日期">02/01/2015</td>
+			<td data-label="金额">$2,311</td>
+			<td data-label="周期">01/01/2015 - 01/31/2015</td>
+		</tr>
+		<tr>
+			<td data-label="支付">支付 #2</td>
+			<td data-label="日期">03/01/2015</td>
+			<td data-label="金额">$3,211</td>
+			<td data-label="周期">02/01/2015 - 02/28/2015</td>
+		</tr>
+	</tbody>
+</table>

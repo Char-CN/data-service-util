@@ -1,0 +1,38 @@
+<style>
+@media screen and (max-width: 600px) {
+	table td:before {
+		content: attr(data-label);
+		float: left;
+		text-transform: uppercase;
+		font-weight: bold;
+	}
+}
+
+h4 {
+	color: green;
+}
+
+h3 {
+	color: red;
+}
+
+tr {
+	background: #99CCFF;
+}
+
+tr:nth-child(2n) {
+	background: #CCCC99;
+	height: 28px;
+}
+
+table thead tr th {
+	font-size: 18px;
+	background-color: #9999CC;
+	height: 35px;
+}
+
+table {
+	width: 100%;
+	border: 2px solid #CCCC99;
+}
+</style>
