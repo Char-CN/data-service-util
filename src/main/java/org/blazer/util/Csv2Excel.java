@@ -7,6 +7,9 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.streaming.SXSSFSheet;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
+import org.blazer.common.file.FHandler;
+import org.blazer.common.file.FReader;
+import org.blazer.common.util.TimeUtil;
 
 public class Csv2Excel {
 
@@ -23,6 +26,11 @@ public class Csv2Excel {
 		if (args.length > 1) {
 			delimeter = args[1];
 		}
+		convert(path, delimeter);
+		System.exit(0);
+	}
+
+	public static void convert(String path, String delimeter) throws IOException {
 		TimeUtil time = TimeUtil.createAndPoint();
 		time.printMs("开始执行");
 		SXSSFWorkbook wb = new SXSSFWorkbook();
@@ -33,8 +41,7 @@ public class Csv2Excel {
 			SXSSFSheet sh = wb.createSheet("Sheet");
 			sh.setRandomAccessWindowSize(100);
 			time.printMs("初始化excel");
-			new FReader(path, new FHandler(sh, delimeter) {
-
+			FReader.create(path, new FHandler(sh, delimeter) {
 				SXSSFSheet sh = (SXSSFSheet) getParameter(0);
 				String delimeter = (String) getParameter(1);
 
@@ -46,7 +53,6 @@ public class Csv2Excel {
 						cell.setCellValue(strs[i]);
 					}
 				}
-
 			});
 			time.printMs("读取文件csv文件并且写入excel");
 			out = new FileOutputStream(outPath);
@@ -58,45 +64,13 @@ public class Csv2Excel {
 		} finally {
 			try {
 				wb.close();
-			} catch (Exception e){
+			} catch (Exception e) {
 			}
 			try {
 				out.close();
-			} catch (Exception e){
+			} catch (Exception e) {
 			}
 		}
-		System.exit(0);
-	}
-
-	public static void convert(String path, String delimeter) throws IOException {
-		TimeUtil time = TimeUtil.createAndPoint();
-		String outPath = path + ".xlsx";
-		SXSSFWorkbook wb = new SXSSFWorkbook();
-		wb.setCompressTempFiles(true);
-		SXSSFSheet sh = wb.createSheet("Sheet");
-		sh.setRandomAccessWindowSize(100);
-		time.printMs("初始化excel");
-		new FReader(path, new FHandler(sh, delimeter) {
-
-			SXSSFSheet sh = (SXSSFSheet) getParameter(0);
-			String delimeter = (String) getParameter(1);
-
-			public void handle(String row) throws IOException {
-				String[] strs = row.split(delimeter);
-				Row r = sh.createRow(index());
-				for (int i = 0; i < strs.length; i++) {
-					Cell cell = r.createCell(i);
-					cell.setCellValue(strs[i]);
-				}
-			}
-
-		});
-		time.printMs("读取文件csv文件并且写入excel");
-		FileOutputStream out = new FileOutputStream(outPath);
-		wb.write(out);
-		wb.close();
-		time.printMs("生成excel");
-		out.close();
 	}
 
 }
