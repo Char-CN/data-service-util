@@ -12,13 +12,13 @@ import org.blazer.common.util.PathUtil;
 public class EmailUtil_Csv2HtmlTable {
 
 	public static void main(String[] args) throws IOException {
-		// args = new String[] { "25958235@qq.com", "你好222", "aaaaaaa" };
+//		 args = new String[] { "25958235@qq.com,blazerhe@gmail.com", "你好222", "aaaaaaa", "/Users/hyy/AutoWork/spider/data/data_pos_organize_20170918.csv", "/Users/hyy/AutoWork/spider/data/data_pos_organize_20170918.csv" };
 		Conf conf = ConfUtil.getConf(PathUtil.root + "email.conf");
 		if (conf.isEmpty()) {
 			conf = ConfUtil.getConf("/email.conf");
 		}
-		System.out.println(PathUtil.root + "email.conf");
-		System.out.println(conf.toString());
+		System.out.println("email配置文件路径:" + PathUtil.root + "email.conf");
+		// System.out.println(conf.toString());
 		if (args.length < 3) {
 			System.err.println("Usage: java -jar xxx.jar ${toMail} ${subject} ${content} ${csvFilePath} [${filePath_1} ${filePath_2} ...]");
 		}
@@ -69,12 +69,11 @@ public class EmailUtil_Csv2HtmlTable {
 		} else {
 			content.append("<h4>结果展示完毕！</h4>");
 		}
-		boolean flag = EmailUtil.sendMail(args[0], args[1], content.toString(), args.length > 3 ? args[3].split(",") : null);
+		boolean debug = Boolean.parseBoolean(conf.get("debug"));
+		boolean flag = EmailUtil.sendMail(debug, args[0], args[1], content.toString(), args.length > 3 ? args[3].split(",") : null);
 		if (flag) {
-			System.out.println("发送成功！");
 			System.exit(0);
 		} else {
-			System.err.println("发送失败！");
 			System.exit(-1);
 		}
 	}

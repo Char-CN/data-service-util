@@ -25,25 +25,24 @@ import org.blazer.common.util.PathUtil;
 public class EmailUtil {
 
 	public static void main(String[] args) throws IOException {
-		// args = new String[] { "25958235@qq.com,blazerhe@gmail.com",
-		// "aaaaaaa", "ccccccc" };
+//		 args = new String[] { "25958235@qq.com,blazerhe@gmail.com",
+//		 "aaaaaaa", "ccccccc" };
 		// args = new String[] { "25958235@qq.com", "你好222", "aaaaaaa" };
 		Conf conf = ConfUtil.getConf(PathUtil.root + "email.conf");
 		if (conf.isEmpty()) {
 			conf = ConfUtil.getConf("/email.conf");
 		}
-		System.out.println(PathUtil.root + "email.conf");
-		System.out.println(conf.toString());
+		// System.out.println(PathUtil.root + "email.conf");
+		// System.out.println(conf.toString());
 		if (args.length < 3) {
 			System.err.println("Usage: java -jar xxx.jar ${toMail} ${subject} ${content} [${filePath_1} ${filePath_2} ...]");
 		}
 		EmailUtil.config(conf.get("fromMail"), conf.get("fromMailCN"), conf.get("pwd"), conf.get("host"));
-		boolean flag = EmailUtil.sendMail(args[0], args[1], args[2], args.length > 3 ? args[3].split(",") : null);
+		boolean debug = Boolean.parseBoolean(conf.get("debug"));
+		boolean flag = EmailUtil.sendMail(debug, args[0], args[1], args[2], args.length > 3 ? args[3].split(",") : null);
 		if (flag) {
-			System.out.println("发送成功！");
 			System.exit(0);
 		} else {
-			System.err.println("发送失败！");
 			System.exit(-1);
 		}
 	}
@@ -64,13 +63,15 @@ public class EmailUtil {
 		EmailUtil.host = host;
 	}
 
-	public static boolean sendMail(String toMail, String subject, String content, String... filePaths) {
-		System.out.println("收件人：" + toMail);
-		System.out.println("主题：" + subject);
-		System.out.println("内容：" + "<xmp>" + content + "</xmp>");
-		if (filePaths != null) {
-			for (int i = 0; i < filePaths.length; i++) {
-				System.out.println("附件" + (i + 1) + "：" + filePaths[i]);
+	public static boolean sendMail(boolean debug, String toMail, String subject, String content, String... filePaths) {
+		if (debug) {
+			System.out.println("收件人：" + toMail);
+			System.out.println("主题：" + subject);
+			System.out.println("内容：" + "<xmp>" + content + "</xmp>");
+			if (filePaths != null) {
+				for (int i = 0; i < filePaths.length; i++) {
+					System.out.println("附件" + (i + 1) + "：" + filePaths[i]);
+				}
 			}
 		}
 		boolean flag = false;
@@ -117,8 +118,10 @@ public class EmailUtil {
 			transport.sendMessage(message, message.getAllRecipients());
 			transport.close();
 			flag = true;
+			System.out.println("发送成功！");
 		} catch (Exception e) {
 			e.printStackTrace();
+			System.out.println("发送失败！");
 		}
 		return flag;
 	}
