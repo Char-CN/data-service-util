@@ -7,6 +7,7 @@ import java.util.Properties;
 
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
+import javax.mail.Address;
 import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.Multipart;
@@ -65,12 +66,12 @@ public class EmailUtil {
 
 	public static boolean sendMail(boolean debug, String toMail, String subject, String content, String... filePaths) {
 		if (debug) {
-			System.out.println("收件人：" + toMail);
-			System.out.println("主题：" + subject);
-			System.out.println("内容：" + "<xmp>" + content + "</xmp>");
+			System.out.println("收件人: " + toMail);
+			System.out.println("主题: " + subject);
+			System.out.println("内容: " + "<xmp>" + content + "</xmp>");
 			if (filePaths != null) {
 				for (int i = 0; i < filePaths.length; i++) {
-					System.out.println("附件" + (i + 1) + "：" + filePaths[i]);
+					System.out.println("附件" + (i + 1) + ": " + filePaths[i]);
 				}
 			}
 		}
@@ -118,10 +119,26 @@ public class EmailUtil {
 			transport.sendMessage(message, message.getAllRecipients());
 			transport.close();
 			flag = true;
-			System.out.println("发送成功！");
+			System.out.println("发送成功!");
+		} catch (javax.mail.SendFailedException se) {
+			System.err.println("过滤不可达邮件:");
+			for (Address address : se.getInvalidAddresses()) {
+				System.err.println(address.toString());
+			}
+			StringBuilder sbToMail = new StringBuilder();
+			System.out.println("重组可达邮件:");
+			for (Address address : se.getValidUnsentAddresses()) {
+				System.out.println(address.toString());
+				if (sbToMail.length() != 0) {
+					sbToMail.append(",");
+				}
+				sbToMail.append(address.toString());
+			}
+			System.out.println("重新发送......");
+			return sendMail(debug, sbToMail.toString(), subject, content, filePaths);
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("发送失败！");
+			System.out.println("发送失败!");
 		}
 		return flag;
 	}

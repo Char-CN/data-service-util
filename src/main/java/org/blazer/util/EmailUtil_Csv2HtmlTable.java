@@ -65,9 +65,11 @@ public class EmailUtil_Csv2HtmlTable {
 		content.append("</table>");
 		// 大于100行
 		if (Boolean.parseBoolean(moreThan100.toString())) {
-			content.append("<h3>结果行数大于100，不予以展示，请查收附件！</h3>");
+			content.append("<h3>结果行数大于100, 不予以展示, 请查收附件! </h3>");
+		} else if (content.indexOf("<tr>") == -1) {
+			content.append("<h4>没有任何数据! </h4>");
 		} else {
-			content.append("<h4>结果展示完毕！</h4>");
+			content.append("<h4>结果展示完毕! </h4>");
 		}
 		boolean debug = Boolean.parseBoolean(conf.get("debug"));
 		boolean flag = EmailUtil.sendMail(debug, args[0], args[1], content.toString(), args.length > 3 ? args[3].split(",") : null);
