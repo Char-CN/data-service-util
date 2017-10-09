@@ -15,7 +15,7 @@ public class Csv2Excel {
 
 	public static void main(String[] args) throws Exception {
 		if (args.length == 0) {
-			args = new String[] { "/Users/hyy/Downloads/big.csv" };
+			args = new String[] { "/Users/hyy/Downloads/zoc_download/2017_10_01_00_00_18_cron_auto_00001.csv" };
 		}
 		if (args.length == 0) {
 			System.err.println("Usage: java -jar xxx.jar $CsvPath [$Delimeter]");
@@ -47,6 +47,10 @@ public class Csv2Excel {
 
 				public void handle(String row) throws IOException {
 					String[] strs = row.split(delimeter);
+					// 备注一下：我去他大爷的，这个坑可以留着以后再填。写入excel流不能大于1048575
+					if (index() == 1048576) {
+						System.out.println("超出最大行数,不能大于1048576.");
+					}
 					Row r = sh.createRow(index());
 					for (int i = 0; i < strs.length; i++) {
 						Cell cell = r.createCell(i);
