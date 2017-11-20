@@ -26,20 +26,21 @@ import org.blazer.common.util.PathUtil;
 public class EmailUtil {
 
 	public static void main(String[] args) throws IOException {
-//		 args = new String[] { "25958235@qq.com,blazerhe@gmail.com",
-//		 "aaaaaaa", "ccccccc" };
-		// args = new String[] { "25958235@qq.com", "你好222", "aaaaaaa" };
+		// args = new String[] { "25958235@qq.com,blazerhe@gmail.com",
+		// "aaaaaaa", "ccccccc" };
 		Conf conf = ConfUtil.getConf(PathUtil.root + "email.conf");
 		if (conf.isEmpty()) {
 			conf = ConfUtil.getConf("/email.conf");
 		}
-		// System.out.println(PathUtil.root + "email.conf");
-		// System.out.println(conf.toString());
+		boolean debug = Boolean.parseBoolean(conf.get("debug"));
+		System.out.println("email配置文件路径:" + PathUtil.root + "email.conf");
+		if (debug) {
+			args = new String[] { "25958235@qq.com", "你好222", "aaaaaaa" };
+		}
 		if (args.length < 3) {
 			System.err.println("Usage: java -jar xxx.jar ${toMail} ${subject} ${content} [${filePath_1} ${filePath_2} ...]");
 		}
 		EmailUtil.config(conf.get("fromMail"), conf.get("fromMailCN"), conf.get("pwd"), conf.get("host"));
-		boolean debug = Boolean.parseBoolean(conf.get("debug"));
 		boolean flag = EmailUtil.sendMail(debug, args[0], args[1], args[2], args.length > 3 ? args[3].split(",") : null);
 		if (flag) {
 			System.exit(0);
